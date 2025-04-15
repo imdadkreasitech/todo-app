@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
+import 'package:todo_app/glassmorphism.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -123,7 +125,10 @@ class _TodoListPageState extends State<TodoListPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Edit Task'),
+          title: const Text(
+            'Edit Task',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           content: TextField(
             controller: _todoController,
             decoration: const InputDecoration(
@@ -137,9 +142,19 @@ class _TodoListPageState extends State<TodoListPage> {
                 _todoController.clear();
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
             ElevatedButton(
+              child: const Text('Save'),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: const Color.fromARGB(255, 246, 104, 9),
+                maximumSize:
+                    const Size(double.infinity, 50), // Set text color to white
+              ),
               onPressed: () {
                 if (_todoController.text.isNotEmpty) {
                   setState(() {
@@ -165,7 +180,6 @@ class _TodoListPageState extends State<TodoListPage> {
                   );
                 }
               },
-              child: const Text('Save'),
             ),
           ],
         );
@@ -178,7 +192,10 @@ class _TodoListPageState extends State<TodoListPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Delete Task'),
+          title: const Text(
+            'Delete Task',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           content: const Text('Are you sure you want to delete this task?'),
           actions: [
             TextButton(
@@ -188,6 +205,12 @@ class _TodoListPageState extends State<TodoListPage> {
               child: const Text('Cancel'),
             ),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: const Color.fromARGB(255, 246, 45, 9),
+                maximumSize:
+                    const Size(double.infinity, 50), // Set text color to white
+              ),
               onPressed: () {
                 setState(() {
                   _todos.removeAt(index);
@@ -215,7 +238,10 @@ class _TodoListPageState extends State<TodoListPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Reset All Tasks'),
+          title: const Text(
+            'Reset All Tasks',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
           content: const Text(
               'Are you sure you want to reset all tasks? This action cannot be undone.'),
           actions: [
@@ -226,6 +252,12 @@ class _TodoListPageState extends State<TodoListPage> {
               child: const Text('Cancel'),
             ),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: const Color.fromARGB(255, 246, 45, 9),
+                maximumSize:
+                    const Size(double.infinity, 50), // Set text color to white
+              ),
               onPressed: () {
                 setState(() {
                   _todos.clear();
@@ -258,6 +290,8 @@ class _TodoListPageState extends State<TodoListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromARGB(255, 242, 43, 29),
+        foregroundColor: Colors.white,
         onPressed: _resetTodosDialog,
         child: const Icon(Icons.refresh),
       ),
@@ -266,121 +300,174 @@ class _TodoListPageState extends State<TodoListPage> {
           image: DecorationImage(
               image: AssetImage("images/background.jpg"), fit: BoxFit.cover),
         ),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 60, 20, 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Todo App",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
+        child: SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 60, 20, 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _todoController,
-                      decoration: const InputDecoration(
-                          labelText: 'Add a task',
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.format_list_bulleted_add)),
-                    ),
+                  Text(
+                    "Todo App",
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
                   ),
-                  const SizedBox(width: 8),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      color: Color.fromARGB(255, 235, 109, 26),
-                      border: Border.all(
-                          color: Color.fromARGB(255, 245, 243, 241), width: 2),
-                    ),
-                    child: IconButton(
-                      onPressed: _addTodo,
-                      icon: Icon(
-                        Icons.add,
-                        color: Colors.white,
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: TextField(
+                        controller: _todoController,
+                        decoration: InputDecoration(
+                          labelText: 'Add a task',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                                8.0), // Optional for rounded corners
+                            borderSide:
+                                BorderSide(color: Colors.white, width: 2.0),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide:
+                                BorderSide(color: Colors.white, width: 2.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide:
+                                BorderSide(color: Colors.white, width: 2.0),
+                          ),
+                          prefixIcon: Icon(Icons.format_list_bulleted_add,
+                              color: Colors.black),
+                          labelStyle: TextStyle(
+                              color: Colors.black), // Optional: label color
+                        ),
+                        style: TextStyle(
+                            color: Colors
+                                .black), // Optional: text color inside input
+                      )),
+                      const SizedBox(width: 8),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          color: const Color.fromARGB(255, 246, 104, 9),
+                          border: Border.all(
+                              color: Color.fromARGB(255, 245, 243, 241),
+                              width: 3),
+                        ),
+                        child: IconButton(
+                          onPressed: _addTodo,
+                          icon: Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
+                    ],
+                  ),
+                  const SizedBox(height: 40),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 4,
+                    ),
+                    child: Glassmorphism(
+                      blur: 10,
+                      opacity: 0.1,
+                      radius: 16,
+                      child: _todos.isEmpty
+                          ? Center(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  // color: Color.fromARGB(255, 9, 9, 9).withAlpha(
+                                  //     (0.5 * 255)
+                                  //         .toInt()), // Apply opacity using withAlpha
+                                  border:
+                                      Border.all(color: Colors.white, width: 2),
+                                ),
+                                height: 50,
+                                child: const Center(
+                                  child: Text(
+                                    'No tasks yet. Add a task to get started!',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Container(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                // color: const Color.fromARGB(255, 240, 237, 237)
+                                //     .withAlpha((0.5 * 255)
+                                //         .toInt()), // Apply opacity using withAlpha
+                                border:
+                                    Border.all(color: Colors.white, width: 2),
+                              ),
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: _todos.length,
+                                itemBuilder: (context, index) {
+                                  final task = _todos[index];
+                                  return Card(
+                                    color: Colors.white,
+                                    margin:
+                                        const EdgeInsets.symmetric(vertical: 4),
+                                    child: ListTile(
+                                      contentPadding:
+                                          EdgeInsets.symmetric(horizontal: 2),
+                                      horizontalTitleGap: 1,
+                                      leading: Checkbox(
+                                        value: task.isCompleted,
+                                        onChanged: (_) =>
+                                            _toggleCompletion(index),
+                                      ),
+                                      title: Text(
+                                        task.text,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                          decoration: task.isCompleted
+                                              ? TextDecoration.lineThrough
+                                              : TextDecoration.none,
+                                        ),
+                                      ),
+                                      trailing: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          IconButton(
+                                            icon: const Icon(Icons.edit,
+                                                color: Color.fromARGB(
+                                                    255, 54, 167, 237)),
+                                            onPressed: () =>
+                                                _editTodoDialog(index),
+                                          ),
+                                          IconButton(
+                                            icon: const Icon(Icons.delete,
+                                                color: Colors.red),
+                                            onPressed: () =>
+                                                _deleteTodoDialog(index),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 40),
-              Expanded(
-                child: _todos.isEmpty
-                    ? Center(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            color: Color.fromARGB(255, 9, 9, 9).withAlpha(
-                                (0.5 * 255)
-                                    .toInt()), // Apply opacity using withAlpha
-                            border: Border.all(color: Colors.white, width: 2),
-                          ),
-                          height: 50,
-                          child: const Center(
-                            child: Text(
-                              'No tasks yet. Add a task to get started!',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    : Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          color: const Color.fromARGB(255, 9, 9, 9).withAlpha(
-                              (0.5 * 255)
-                                  .toInt()), // Apply opacity using withAlpha
-                          border: Border.all(color: Colors.white, width: 2),
-                        ),
-                        child: ListView.builder(
-                          itemCount: _todos.length,
-                          itemBuilder: (context, index) {
-                            final task = _todos[index];
-                            return Card(
-                              margin: const EdgeInsets.symmetric(vertical: 4),
-                              child: ListTile(
-                                leading: Checkbox(
-                                  value: task.isCompleted,
-                                  onChanged: (_) => _toggleCompletion(index),
-                                ),
-                                title: Text(
-                                  task.text,
-                                  style: TextStyle(
-                                    decoration: task.isCompleted
-                                        ? TextDecoration.lineThrough
-                                        : TextDecoration.none,
-                                  ),
-                                ),
-                                trailing: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    IconButton(
-                                      icon: const Icon(Icons.edit,
-                                          color: Colors.blue),
-                                      onPressed: () => _editTodoDialog(index),
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(Icons.delete,
-                                          color: Colors.red),
-                                      onPressed: () => _deleteTodoDialog(index),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-              ),
-            ],
+            ),
           ),
         ),
       ),

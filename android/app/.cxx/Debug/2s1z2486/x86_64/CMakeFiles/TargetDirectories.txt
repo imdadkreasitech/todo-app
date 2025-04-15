@@ -1,0 +1,2 @@
+/Users/kreasitech/Code/imdad/todo_app/android/app/.cxx/Debug/2s1z2486/x86_64/CMakeFiles/edit_cache.dir
+/Users/kreasitech/Code/imdad/todo_app/android/app/.cxx/Debug/2s1z2486/x86_64/CMakeFiles/rebuild_cache.dir
